@@ -9,8 +9,18 @@
     <servlet-name>index</servlet-name>
     <servlet-class>com.cheng.servletmvc.SendMsg</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>reload</servlet-name>
+    <servlet-class>com.cheng.servletmvc.AjaxReload</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>index</servlet-name>
     <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>reload</servlet-name>
+    <url-pattern>/reload</url-pattern>
   </servlet-mapping>
 </web-app>

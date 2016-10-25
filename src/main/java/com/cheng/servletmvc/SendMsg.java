@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Desc: 发送消息处理
+ *
+ * http://localhost/ServletMVC/index?method=index
+ *
  * Author: Cheng
  * Date: 2016/3/4 0004
  */
@@ -18,5 +21,6 @@ public class SendMsg extends BaseServlet {
         System.out.println("===========updata========ss==");
         return "updata";
     }
+
 
 }
