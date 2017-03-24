@@ -1,5 +1,8 @@
 package com.cheng.servletmvc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,8 @@ import java.lang.reflect.Method;
  * Date: 2016/3/4 0004
  */
 public class BaseServlet extends HttpServlet {
+
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     private static final String REDIRECT = "redirect:";
     private static final String PREFIX = "/WEB-INF/view/";

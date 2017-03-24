@@ -13,6 +13,10 @@
     <servlet-name>reload</servlet-name>
     <servlet-class>com.cheng.servletmvc.AjaxReload</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>weixin</servlet-name>
+    <servlet-class>com.cheng.weixin.WinxinServlet</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>index</servlet-name>
@@ -22,5 +26,10 @@
   <servlet-mapping>
     <servlet-name>reload</servlet-name>
     <url-pattern>/reload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>weixin</servlet-name>
+    <url-pattern>/weixin</url-pattern>
   </servlet-mapping>
 </web-app>

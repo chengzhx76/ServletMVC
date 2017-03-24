@@ -1,0 +1,89 @@
+body {
+  font-size: 12px;
+  color: #969696;
+  font-family: Helvetica,Droidsansfallback;
+  position:relative;
+  background: #F0EFF5;
+}
+ul, li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+body, h1, h2, h3, h4, h5, h6, p, div, ul, li, a, button, section, figure, figcaption {
+  margin: 0;
+  padding: 0;
+}
+.page-hd {
+  padding-left: 10px;
+}
+.page-hd .page-hd-title {
+  margin-bottom: 0;
+  height: 180px;
+}
+
+.page-hd .page-hd-title img {
+  width: 100%;
+  height: 100%;
+}
+
+.page-bd .weui_cells {
+  margin-top: 10px;
+}
+.page-bd .weui_btn_area {
+  margin-top: 35px;
+}
+.page-bd .weui_label {
+  width: 50px;
+}
+.page-bd .weui_input {
+  color: #3e3e3e;
+}
+
+.weui-form-preview {
+  height: 248px;
+  width: 260px;
+  position: fixed;
+  margin:auto;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  border-radius: 8px;
+}
+
+.weui-form-preview .weui-form-preview-hd {
+  text-align: center;
+}
+.weui-form-preview .weui-form-preview-bd {
+  font-size: 16px;
+  text-align: left;
+  background: #ffffff;
+}
+.weui-form-preview .weui-form-preview-bd .weui-form-preview-label {
+  margin-right: 2px;
+  min-width: 0;
+  letter-spacing: 5px
+}
+
+.weui-form-preview .weui-form-preview-btn {
+  font-size: 18px;
+}
+.weui-form-preview-ft {
+  background: #ffffff;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.weui-form-preview::after {
+  border-bottom: none;
+}
+.weui-form-preview-hd::after {
+  left: 0;
+}
+body {
+  position: relative;
+}
+.weui_toptips {
+  position: absolute;
+}

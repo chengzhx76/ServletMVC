@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+    <link rel="stylesheet" href="css/weui.css"/>
+    <link rel="stylesheet" href="css/weui2.css"/>
+    <link rel="stylesheet" href="css/reg.css">
+</head>
+<body>
+<div class="page-hd">
+    <h1 class="page-hd-title"><img src="img/logo.png"/></h1>
+</div>
+<div class="page-bd">
+    <form id="form">
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" name="userName" value="张山" placeholder="输入你的姓名">
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">工号</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" name="workNumber" placeholder="输入你的工号">
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">部门</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <!--<input class="weui_input" type="text" name="department" value="技术发展中心" placeholder="输入你的部门">-->
+                    <input class="weui_input" type="text" name="department" value="" placeholder="选择你的部门"/>
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">职位</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" name="position" value="开发工程师" placeholder="输入你的职位">
+                </div>
+            </div>
+        </div>
+        <div class="weui_btn_area">
+            <a id="formSubmitBtn" href="javascript:" class="weui_btn weui_btn_primary">提交</a>
+        </div>
+    </form>
+</div>
+
+<div id="verify-info" class="weui_msg_img hide">
+    <div class="weui-form-preview">
+        <div class="weui-form-preview-hd"><h2>请确认</h2></div>
+        <div class="weui-form-preview-bd">
+            <p>
+                <label class="weui-form-preview-label">姓名：</label>
+                <span id="userName" class="weui-form-preview-value"></span>
+            </p>
+            <p>
+                <label class="weui-form-preview-label">工号：</label>
+                <span id="workNumber" class="weui-form-preview-value"></span>
+            </p>
+            <p>
+                <label class="weui-form-preview-label">部门：</label>
+                <span id="department" class="weui-form-preview-value"></span>
+            </p>
+            <p>
+                <label class="weui-form-preview-label">职位：</label>
+                <span id="position" class="weui-form-preview-value"></span>
+            </p>
+        </div>
+        <div class="weui-form-preview-ft">
+            <a id="cancel" class="weui-form-preview-btn weui-form-preview-btn-default" href="javascript:">取消</a>
+            <a id="verify" class="weui-form-preview-btn weui-form-preview-btn-primary" href="javascript:">确认</a>
+        </div>
+    </div>
+</div>
+
+<div class="loading">
+
+
+</div>
+
+
+<script>
+    $(function(){
+        $("input[name=userName]").on("input paste" , function(){
+            var num_left=5-$(this).val().length;
+            if(num_left<0) {
+                $.toast("姓名最长为5位", "forbidden");
+                $(this).val($(this).val().substring(0,5));
+            }
+        });
+
+        var len = 0;
+        $("input[name=workNumber]").on("input paste" , function(){
+            var num_left=4-$(this).val().length;
+            if(!/^[0-9]*$/.test($(this).val())) {
+                $(this).val($(this).val().substring(0, len));
+                $.toast("工号只能为数字", "forbidden");
+                return;
+            }
+            len = $(this).val().length;
+            if(num_left<0) {
+                $.toast("工号只能为4位数字", "forbidden");
+                $(this).val($(this).val().substring(0, 4));
+            }
+        });
+
+        $("input[name=department]").on("input paste" , function(){
+            var num_left=15-$(this).val().length;
+            if(num_left<0) {
+                $.toast("部门名称最长为15位", "forbidden");
+                $(this).val($(this).val().substring(0, 15));
+            }
+        });
+        $("input[name=position]").on("input paste" , function(){
+            var num_left=15-$(this).val().length;
+            if(num_left<0) {
+                $.toast("职位名称最长为15位", "forbidden");
+                $(this).val($(this).val().substring(0, 15));
+            }
+        });
+
+        $("#formSubmitBtn").on("click", function () {
+            var userName = $("input[name=userName]").val().trim();
+            var workNumber = $("input[name=workNumber]").val().trim();
+            var department = $("input[name=department]").val().trim();
+            var position = $("input[name=position]").val().trim();
+            if(userName.length == 0) {
+                $.toast("姓名不能为空", "forbidden");
+                $("input[name=userName]").val('');
+                return;
+            }
+            if(!/[\u4e00-\u9fa5]+/.test(userName)) {
+                $.toast("姓名只能为中文", "forbidden");
+                $("input[name=userName]").val('');
+                return;
+            }
+            if(userName.length == 0) {
+                $.toast("工号不能为空", "forbidden");
+                $("input[name=workNumber]").val('');
+                return;
+            }
+            if(!/^\d{4}$/.test(workNumber)) {
+                $.toast("工号为4位数字", "forbidden");
+                $("input[name=workNumber]").val('');
+                return;
+            }
+            if(department.length == 0) {
+                $.toast("部门名称不能为空", "forbidden");
+                $("input[name=department]").val('');
+                return;
+            }
+            if(!/[\u4e00-\u9fa5]+/.test(department)) {
+                $.toast("部门名称只能为中文", "forbidden");
+                $("input[name=department]").val('');
+                return;
+            }
+            if(position.length == 0) {
+                $.toast("职位名称不能为空", "forbidden");
+                $("input[name=position]").val('');
+                return;
+            }
+            if(!/[\u4e00-\u9fa5]+/.test(position)) {
+                $.toast("职位名称只能为中文", "forbidden");
+                $("input[name=position]").val('');
+                return;
+            }
+
+            $('#userName').html(userName);
+            $('#workNumber').html(workNumber);
+            $('#department').html(department);
+            $('#position').html(position);
+
+            $('#verify-info').fadeIn();
+            $("#formSubmitBtn").addClass('weui_btn_disabled');
+        });
+
+        $('#cancel').click(function(){
+            $('#verify-info').fadeOut();
+            $("#formSubmitBtn").removeClass('weui_btn_disabled');
+        })
+        $('#verify').click(function(){
+            $('#verify-info').fadeOut();
+            $.showLoading("提交中");
+//            $.hideLoading();
+        })
+
+        // 选择部门
+        $("input[name=department]").select({
+            title: "选择爱机",
+            items: [
+                {
+                    title: "爱机我",
+                    value: "001",
+                },
+                {
+                    title: "我",
+                    value: "002",
+                },
+                {
+                    title: "啥",
+                    value: "003",
+                }
+            ],
+            onChange: function (d) {
+//                $.alert("你选择了" + d.values + d.titles);
+            }
+        });
+    });
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="js/zepto.min.js"></script>
+<script src="js/select.js"></script>
+<script src="js/picker.js"></script>
+</body>
+</html>

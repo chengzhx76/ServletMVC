@@ -30,7 +30,8 @@ public class TestAll {
     }
 
     public static void main(String[] args) {
-        System.out.println(dg(4)); //第三十个
+//        System.out.println(dg(4)); //第三十个
+        sub();
     }
 
     public static int dg(int count){
@@ -42,5 +43,18 @@ public class TestAll {
             return i+j;
         }
     }
+
+
+    private static void sub() {
+        String str = "A0002864_201702241717421487927862468_dbtestfrms_2";
+        System.out.println(str.indexOf("_"));
+        String data = str.substring(str.indexOf("_", str.indexOf("_")+1)+1, str.lastIndexOf("_"));
+
+        System.out.println(data);
+
+    }
+
+
+
 
 }
