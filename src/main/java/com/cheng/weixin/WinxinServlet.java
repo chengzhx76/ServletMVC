@@ -1,6 +1,8 @@
 package com.cheng.weixin;
 
+import com.alibaba.fastjson.JSON;
 import com.cheng.servletmvc.BaseServlet;
+import com.cheng.utils.HttpUtils;
 import com.google.common.base.Strings;
 import com.google.common.hash.Hashing;
 
@@ -8,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * Desc:
@@ -27,7 +31,34 @@ public class WinxinServlet extends BaseServlet {
         }
     }
 
+    public String laodingPage(HttpServletRequest request, HttpServletResponse response) {
+        Enumeration en = request.getParameterNames();
+        while(en.hasMoreElements()){
+            String el = en.nextElement().toString();
+            System.out.println(el+"="+request.getParameter(el));
+        }
+        return "weixin/loading";
+    }
 
+    public String one(HttpServletRequest request, HttpServletResponse response) {
+        String code = request.getParameter("code");
+        log.info("--------------> "+code);
+        String openId = request.getParameter("openId");
+        log.info("--------------> "+openId);
+        if (!Strings.isNullOrEmpty(code)) {
+            String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxcabea2c14e5861ec&secret=d4624c36b6795d1d99dcf0547af5443d&code="
+                    +code+"&grant_type=authorization_code";
+            String wxUser = HttpUtils.doGet(url);
+            log.info(wxUser);
+            Map<String, String> map = JSON.parseObject(wxUser, Map.class);
+            request.setAttribute("info", "微信上获取的");
+            request.setAttribute("openId", map.get("openid"));
+        }else {
+            request.setAttribute("info", "缓存的");
+            request.setAttribute("openId", openId);
+        }
+        return "weixin/one";
+    }
 
     public String wxPage(HttpServletRequest request, HttpServletResponse response) {
         Enumeration en = request.getParameterNames();
@@ -55,7 +86,7 @@ public class WinxinServlet extends BaseServlet {
             return;
         }
 
-        String[] wxParam = {"wechat", timestamp, nonce};
+        String[] wxParam = {"chengzhx76", timestamp, nonce};
         Arrays.sort(wxParam);
         StringBuilder allParam = new StringBuilder();
         for (String param : wxParam) {

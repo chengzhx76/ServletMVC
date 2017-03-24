@@ -25,20 +25,26 @@ public class BaseServlet extends HttpServlet {
     private static final String SUFFIX = ".jsp";
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
             String reqestMethod = req.getParameter("method");
-            Method method = this.getClass().getMethod(reqestMethod, HttpServletRequest.class, HttpServletResponse.class);
-            String jumpPath = (String) method.invoke(this, req, resp);
+            if (reqestMethod != null && !"".equals(reqestMethod)) {
+                Method method = this.getClass().getMethod(reqestMethod, HttpServletRequest.class, HttpServletResponse.class);
+                String jumpPath = (String) method.invoke(this, req, resp);
 
-            if (jumpPath!=null && !"".equals(jumpPath)) {
-                if (jumpPath.startsWith(REDIRECT)) { // 客户端跳转
-                    resp.sendRedirect(jumpPath.substring(REDIRECT.length()));
-                }else {
-                    req.getRequestDispatcher(PREFIX+jumpPath+SUFFIX).forward(req, resp); // 服务器跳转
+                if (jumpPath!=null && !"".equals(jumpPath)) {
+                    if (jumpPath.startsWith(REDIRECT)) { // 客户端跳转
+                        resp.sendRedirect(jumpPath.substring(REDIRECT.length()));
+                    }else {
+                        req.getRequestDispatcher(PREFIX+jumpPath+SUFFIX).forward(req, resp); // 服务器跳转
+                    }
                 }
             }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            log.error("没有该方法", e);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
