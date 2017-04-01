@@ -7,26 +7,51 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
-    <script src="http://chengzhx76.wicp.net/ServletMVC/static/js/main.js"></script>
+    <script src="static/js/zepto.min.js"></script>
+    <script src="static/js/zepto.cookie.js"></script>
+    <script src="static/js/main.js"></script>
 </head>
 <body>
 
 <div class="loading">
-    加载中，请稍等...
+    加载中...
 </div>
 
 <script>
-    window.onload=function(){
-        var openId = getLocVal('openId');
+
+    $(function(){
+        var openId = $.fn.cookie('openId');
+        var url = 'http://chengzhx76.wicp.net/ServletMVC/weixin?method='+getQueryparam('url');
+        if (openId != null && openId != '') {
+            console.log(openId);
+            window.location.href = url;
+        } else {
+            var wxUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcabea2c14e5861ec&redirect_uri=' + encodeURIComponent(url) + '&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+            window.location.href = wxUrl;
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+    /*window.onload=function(){
+        var openId = $.fn.cookie('openId');
         var url = 'http://chengzhx76.wicp.net/ServletMVC/weixin?method='+getQueryparam('url');
         if (openId != '') {
-            var jumUrl = url+'&openId='+openId;
+            var jumUrl = url;
             window.location.href = jumUrl;
         }else {
             var wxUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcabea2c14e5861ec&redirect_uri=' + encodeURIComponent(url) + '&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
             window.location.href = wxUrl;
         }
-    }
+    }*/
 </script>
 </body>
 </html>
