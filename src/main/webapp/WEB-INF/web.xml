@@ -18,6 +18,11 @@
     <servlet-class>com.cheng.weixin.WinxinServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>chain</servlet-name>
+    <servlet-class>com.cheng.chain.UChainServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>index</servlet-name>
     <url-pattern>/index</url-pattern>
@@ -31,6 +36,11 @@
   <servlet-mapping>
     <servlet-name>weixin</servlet-name>
     <url-pattern>/weixin</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>chain</servlet-name>
+    <url-pattern>/chain</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

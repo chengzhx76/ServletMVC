@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -27,9 +28,9 @@ public class BaseServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String reqestMethod = req.getParameter("method");
-            if (reqestMethod != null && !"".equals(reqestMethod)) {
-                Method method = this.getClass().getMethod(reqestMethod, HttpServletRequest.class, HttpServletResponse.class);
+            String requestMethod = req.getParameter("method");
+            if (requestMethod != null && !"".equals(requestMethod)) {
+                Method method = this.getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
                 String jumpPath = (String) method.invoke(this, req, resp);
 
                 if (jumpPath!=null && !"".equals(jumpPath)) {
@@ -48,4 +49,37 @@ public class BaseServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 获取参数
+     * @param request
+     * @param key
+     * @return
+     */
+    protected String getParameter(HttpServletRequest request, String key) {
+        return request.getParameter(key);
+    }
+
+    /**
+     * 字符串写到客户端
+     * @param response
+     * @param reqStr
+     */
+    protected void writerToClient(HttpServletResponse response, String reqStr) {
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/plain");
+        PrintWriter writer = null;
+        try {
+            writer = response.getWriter();
+            writer.write(reqStr);
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null)
+                writer.close();
+        }
+
+    }
+
 }
