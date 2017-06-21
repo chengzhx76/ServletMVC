@@ -65,7 +65,7 @@ public class SSHHelper {
     }
 
     public static void main(String args[]){
-        String exec = exec("", "", "", 22, "tail -f /home/db2inst1/kafka9dbrepv4/log/log4j_daily.log;");
+        String exec = exec("", "", "", 22, ";");
         System.out.println(exec);
     }
 }
