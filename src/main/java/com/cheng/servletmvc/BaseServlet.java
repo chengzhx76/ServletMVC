@@ -1,5 +1,6 @@
 package com.cheng.servletmvc;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * Desc: 基础servlet实现请求转发功能
@@ -60,6 +62,11 @@ public class BaseServlet extends HttpServlet {
         return request.getParameter(key);
     }
 
+    protected void writerToClient(HttpServletResponse response, Map<String, Object> map) {
+        String json = JSON.toJSONString(map);
+        writerToClient(response, json);
+    }
+
     /**
      * 字符串写到客户端
      * @param response
@@ -79,7 +86,6 @@ public class BaseServlet extends HttpServlet {
             if (writer != null)
                 writer.close();
         }
-
     }
 
 }

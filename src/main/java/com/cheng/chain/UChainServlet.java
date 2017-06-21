@@ -2,25 +2,31 @@ package com.cheng.chain;
 
 
 import com.cheng.servletmvc.BaseServlet;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Desc: 区块链相关
  * Author: hp
  * Date: 2017/6/12
  *
- * http://localhost/ServletMVC/chain?method=index&api=repaymentstatus
+ * http://localhost/ServletMVC/chain?method=index&api=getPeerInfo
  *
  */
 public class UChainServlet extends BaseServlet {
     private static final String API = "api";
-    // json的数据
-    private static final String CHAINCONFIG = "/chainConfig.properties";
+    private static final String GETPEERINFO = "getPeerInfo";
+    private static final String GETBLOCKINFO = "getBlockInfo";
+    private static final String GETTRANSACTIONINFO = "getTransactionInfo";
+    private static final String GETTRANSACTIONDETAIL = "queryOrder";
+    private static final String QUERYORDER = "queryOrder";
+    private static final String ORDERSTATEHISTORY = "orderStateHistory";
+    private static final String REPAYMENTSTATE = "repaymentState";
 
     /**
      * 请求的接口
@@ -29,16 +35,229 @@ public class UChainServlet extends BaseServlet {
      */
     public void index(HttpServletRequest request, HttpServletResponse response) {
         String api = getParameter(request, API);
-        String json = getJson(api);
-        writerToClient(response, json);
+        Map<String, Object> data = new HashMap<>();
+        if (GETPEERINFO.equals(api))
+            data = getPeerInfo(data);
+        if (GETBLOCKINFO.equals(api))
+            data = getBlockInfo(data);
+        if (GETTRANSACTIONINFO.equals(api))
+            data = getTransactionInfo(data);
+        if (GETTRANSACTIONDETAIL.equals(api))
+            data = getTransactionDetail(data);
+        if (QUERYORDER.equals(api))
+            data = queryOrder(data);
+        if (ORDERSTATEHISTORY.equals(api))
+            data = orderStateHistory(data);
+        if (REPAYMENTSTATE.equals(api))
+            data = repaymentState(data);
+        writerToClient(response, data);
     }
+
+    // 15.1.查询节点列表
+    private Map<String, Object> getPeerInfo(Map<String, Object> data) {
+        List<Map<String, Object>> peerInfos = new ArrayList<>();
+        Map<String, Object> peerinfo = new HashMap<>();
+        peerinfo.put("peer_id", "0001");
+        peerinfo.put("block_height", RandomUtils.nextInt(2510, 2520));
+        peerinfo.put("txs_amount", RandomUtils.nextInt(2110, 2120));
+        peerinfo.put("run_time", "305");
+        peerinfo.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        peerinfo.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        peerInfos.add(peerinfo);
+
+        peerinfo = new HashMap<>();
+        peerinfo.put("peer_id", "0002");
+        peerinfo.put("block_height", RandomUtils.nextInt(2510, 2520));
+        peerinfo.put("txs_amount", RandomUtils.nextInt(2110, 2120));
+        peerinfo.put("run_time", "305");
+        peerinfo.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        peerinfo.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        peerInfos.add(peerinfo);
+
+        peerinfo = new HashMap<>();
+        peerinfo.put("peer_id", "0003");
+        peerinfo.put("block_height", RandomUtils.nextInt(2510, 2520));
+        peerinfo.put("txs_amount", RandomUtils.nextInt(2110, 2120));
+        peerinfo.put("run_time", "305");
+        peerinfo.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        peerinfo.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        peerInfos.add(peerinfo);
+
+        peerinfo = new HashMap<>();
+        peerinfo.put("peer_id", "0004");
+        peerinfo.put("block_height", RandomUtils.nextInt(2510, 2520));
+        peerinfo.put("txs_amount", RandomUtils.nextInt(2110, 2120));
+        peerinfo.put("run_time", "305");
+        peerinfo.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        peerinfo.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        peerInfos.add(peerinfo);
+
+        data.put("peerinfo", peerInfos);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.2.查询块列表
+    private Map<String, Object> getBlockInfo (Map<String, Object> data) {
+        List<Map<String, Object>> blocks = new ArrayList<>();
+        Map<String, Object> block = new HashMap<>();
+        block.put("tx_num", RandomUtils.nextInt(2110, 2120));
+        block.put("block_num", RandomUtils.nextInt(2510, 2520));
+        block.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_pre_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        blocks.add(block);
+
+        block = new HashMap<>();
+        block.put("tx_num", RandomUtils.nextInt(2110, 2120));
+        block.put("block_num", RandomUtils.nextInt(2510, 2520));
+        block.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_pre_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        blocks.add(block);
+
+        block = new HashMap<>();
+        block.put("tx_num", RandomUtils.nextInt(2110, 2120));
+        block.put("block_num", RandomUtils.nextInt(2510, 2520));
+        block.put("block_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_pre_hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("block_createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        blocks.add(block);
+
+        data.put("blocks", blocks);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.3.交易列表
+    private Map<String, Object> getTransactionInfo (Map<String, Object> data) {
+        List<Map<String, Object>> transactions = new ArrayList<>();
+        Map<String, Object> transaction = new HashMap<>();
+        transaction.put("txid", RandomStringUtils.randomNumeric(8));
+        transaction.put("index", RandomUtils.nextInt(0, 2520));
+        transaction.put("optype", RandomUtils.nextInt(1, 5));
+        transaction.put("tx_time", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        transaction.put("tx", "");
+        transactions.add(transaction);
+
+        transaction = new HashMap<>();
+        transaction.put("txid", RandomStringUtils.randomNumeric(8));
+        transaction.put("index", RandomUtils.nextInt(0, 2520));
+        transaction.put("optype", RandomUtils.nextInt(1, 5));
+        transaction.put("tx_time", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        transaction.put("tx", "");
+        transactions.add(transaction);
+
+        transaction = new HashMap<>();
+        transaction.put("txid", RandomStringUtils.randomNumeric(8));
+        transaction.put("index", RandomUtils.nextInt(0, 2520));
+        transaction.put("optype", RandomUtils.nextInt(1, 5));
+        transaction.put("tx_time", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        transaction.put("tx", "");
+        transactions.add(transaction);
+
+        data.put("transactions", transactions);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.4.交易详情
+    private Map<String, Object> getTransactionDetail (Map<String, Object> data) {
+        data.put("hash", RandomStringUtils.randomAlphanumeric(60));
+        data.put("index", RandomUtils.nextInt(0, 2520));
+        data.put("optype", RandomUtils.nextInt(1, 5));
+        data.put("tx_time", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        data.put("tx", "");
+
+        Map<String, Object> block = new HashMap<>();
+        block.put("block_num", RandomUtils.nextInt(2510, 2520));
+        block.put("hash", RandomStringUtils.randomAlphanumeric(60));
+        block.put("createtime", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        data.put("block", block);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.5订单查询
+    private Map<String, Object> queryOrder(Map<String, Object> data) {
+        List<Map<String, Object>> orders = new ArrayList<>();
+        Map<String, Object> order = new HashMap<>();
+        order.put("mer_id", RandomStringUtils.randomAlphanumeric(8));
+        order.put("order_id", RandomStringUtils.randomNumeric(10));
+        order.put("transaction_date", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        order.put("transaction_id", RandomStringUtils.randomAlphanumeric(10));
+        order.put("total_cost", RandomUtils.nextInt(5510, 6500));
+        order.put("order_status", RandomUtils.nextInt(0, 2));
+        orders.add(order);
+
+        order = new HashMap<>();
+        order.put("mer_id", RandomStringUtils.randomAlphanumeric(8));
+        order.put("order_id", RandomStringUtils.randomNumeric(10));
+        order.put("transaction_date", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        order.put("transaction_id", RandomStringUtils.randomAlphanumeric(10));
+        order.put("total_cost", RandomUtils.nextInt(5510, 6500));
+        order.put("order_status", RandomUtils.nextInt(0, 2));
+        orders.add(order);
+
+        order = new HashMap<>();
+        order.put("mer_id", RandomStringUtils.randomAlphanumeric(8));
+        order.put("order_id", RandomStringUtils.randomNumeric(10));
+        order.put("transaction_date", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        order.put("transaction_id", RandomStringUtils.randomAlphanumeric(10));
+        order.put("total_cost", RandomUtils.nextInt(5510, 6500));
+        order.put("order_status", RandomUtils.nextInt(0, 2));
+        orders.add(order);
+
+        data.put("orders", orders);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.6订单查询
+    private Map<String, Object> orderStateHistory(Map<String, Object> data) {
+        data.put("transaction_date", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        data.put("transaction_id",  RandomStringUtils.randomAlphanumeric(10));
+
+        Map<String, Object> history = new HashMap<>();
+        history.put("order_status", RandomUtils.nextInt(0, 2));
+        history.put("txid", RandomStringUtils.randomAlphanumeric(10));
+        data.put("order_status_history", history);
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+    // 15.7融资状态
+    private Map<String, Object> repaymentState(Map<String, Object> data) {
+        data.put("repayment_status", RandomUtils.nextInt(1, 2));
+        data.put("sign_type", "");
+        data.put("sign_data", "");
+        return data;
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * 获取json
      * @param key
      * @return
+     * String json = getJson(api);
+     *     // json的数据
+     * private static final String CHAINCONFIG = "/chainConfig.properties";
      */
-    private String getJson(String key) {
+    /*private String getJson(String key) {
         InputStream stream = getClass().getResourceAsStream(CHAINCONFIG);
         Properties props = new Properties();
         try {
@@ -47,6 +266,6 @@ public class UChainServlet extends BaseServlet {
             e.printStackTrace();
         }
         return props.getProperty(key, "");
-    }
+    }*/
 
 }

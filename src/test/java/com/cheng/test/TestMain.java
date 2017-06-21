@@ -1,13 +1,14 @@
 package com.cheng.test;
 
 import com.alibaba.fastjson.JSON;
-import com.cheng.mode.User;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.junit.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Desc:
@@ -17,7 +18,7 @@ import java.util.Random;
 public class TestMain {
     public static void main(String[] args) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss");
+        /*SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm:ss");
         List<User> users = new ArrayList<>();
 
         User user = new User();
@@ -38,6 +39,30 @@ public class TestMain {
         } else {
             data = JSON.toJSONString(users);
         }
-        System.out.println("===> "+data);
+        System.out.println("===> "+data);*/
     }
+
+    @Test
+    public void test01() {
+        Map<String, Object> json = new HashMap<>();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("transaction_date", DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd HH:mm:ss"));
+        data.put("transaction_id",  RandomStringUtils.randomAlphanumeric(10));
+
+        Map<String, Object> history = new HashMap<>();
+        history.put("order_status", RandomUtils.nextInt(0, 2));
+        history.put("txid", RandomStringUtils.randomAlphanumeric(10));
+        data.put("order_status_history", history);
+
+        json.put("data", data);
+        json.put("sign_type", "");
+        json.put("sign_data", "");
+        json.put("code", 200);
+        json.put("success", true);
+        json.put("msg", "请求成功");
+
+        System.out.println(JSON.toJSONString(json));
+    }
+
 }

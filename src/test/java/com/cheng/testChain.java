@@ -19,10 +19,10 @@ public class testChain {
 //        map = repaymentstatus(map);
 //        map = orderinfobyorderid(map);
 //        map = orderinfobydate(map);
-//        map = getpeerinfo(map);
+        map = getpeerinfo(map); // 9.10
 //        map = getblockinfo(map);
 //        map = gettxidinfobytxid(map);
-        map = pen(map);
+//        map = pen(map);
 
         String json = JSON.toJSONString(map);
         System.out.println(json);
@@ -113,7 +113,7 @@ public class testChain {
 
     // 9.10
     private static Map<String, Object> getpeerinfo(Map<String, Object> map) {
-        List<Map<String, Object>> ip_lists = new ArrayList<>();
+        /*List<Map<String, Object>> ip_lists = new ArrayList<>();
         Map<String, Object> ip_port = new HashMap<>();
         ip_port.put("ip_port", "10.10.10.1:80");
         ip_lists.add(ip_port);
@@ -129,19 +129,18 @@ public class testChain {
         map.put("txs_amount", "635535");
         map.put("run_time", "20");
         map.put("sign_type", "");
-        map.put("sign_data", "");
-
+        map.put("sign_data", "");*/
         return map;
     }
     // 9.11
     private static Map<String, Object> getblockinfo(Map<String, Object> map) {
-        map.put("block_num", "56");
+        /*map.put("block_num", "56");
         map.put("block_hash", "bdd79e212efb59732028a531cb2ae40cc93d117043d0cd5b9bfabea659f4e270");
         map.put("block_prehash", "20");
         map.put("block_createtime", "2017-06-15 12:00:55");
         String[] txs = {"txkC4Ck31r4GzjpjWaLHvGVj","omMEBYqzZDDtGuuRiK6k4yKx"};
         map.put("txs", txs);
-        map.put("sign_type", "");
+        map.put("sign_type", "");*/
         map.put("sign_data", "");
         return map;
     }
