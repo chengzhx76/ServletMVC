@@ -1,0 +1,1 @@
+{"retcode":"0000","retmsg":"[{\"mer_id\":\"mer02\",\"repayment_status\":1,\"req\":2},{\"mer_id\":\"mer02\",\"repayment_status\":1,\"req\":2},{\"mer_id\":\"mer02\",\"repayment_status\":1,\"req\":2},{\"mer_id\":\"mer02\",\"repayment_status\":1,\"req\":2}]"}

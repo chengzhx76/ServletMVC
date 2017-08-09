@@ -2,6 +2,7 @@ package com.cheng.chain;
 
 
 import com.cheng.servletmvc.BaseServlet;
+import com.cheng.utils.HttpUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -23,7 +24,7 @@ public class UChainServlet extends BaseServlet {
     private static final String GETPEERINFO = "getPeerInfo";
     private static final String GETBLOCKINFO = "getBlockInfo";
     private static final String GETTRANSACTIONINFO = "getTransactionInfo";
-    private static final String GETTRANSACTIONDETAIL = "queryOrder";
+    private static final String GETTRANSACTIONDETAIL = "getTransactionDetail";
     private static final String QUERYORDER = "queryOrder";
     private static final String ORDERSTATEHISTORY = "orderStateHistory";
     private static final String REPAYMENTSTATE = "repaymentState";
@@ -240,8 +241,39 @@ public class UChainServlet extends BaseServlet {
         return data;
     }
 
+    private final static String DOMAIN = "http://10.10.144.10:8989/";
+//    private final static String DOMAIN = "http://10.10.133.26:8989/";
+    public void handle(HttpServletRequest request, HttpServletResponse response) {
+        String api = getParameter(request, API);
+        String peer_id = getParameter(request, "peer_id");
+        String begin_block_num = getParameter(request, "begin_block_num");
+        String end_block_num = getParameter(request, "end_block_num");
+        String block_num = getParameter(request, "block_num");
+        String start_index = getParameter(request, "start_index");
+        String end_index = getParameter(request, "end_index");
+        String txid = getParameter(request, "txid");
+        String mer_id = getParameter(request, "mer_id");
+        String order_id = getParameter(request, "order_id");
+        String url = "";
+        if (GETPEERINFO.equals(api))
+            url = DOMAIN + "getpeerinfo/0001.json?METHOD=GET";
+        if (GETBLOCKINFO.equals(api))
+            url = DOMAIN + "getblockinfo/0001.json?METHOD=GET&peer_id="+peer_id+"&begin_block_num="+begin_block_num+"&end_block_num="+end_block_num;
+        if (GETTRANSACTIONINFO.equals(api))
+            url = DOMAIN + "getTxListByTxIndex/0001.json?METHOD=GET&peer_id="+peer_id+"&block_num="+block_num+"&start_index="+start_index+"&end_index="+end_index;
+        if (GETTRANSACTIONDETAIL.equals(api))
+            url = DOMAIN + "gettxinfobytxid/0001.json?METHOD=GET&peer_id="+peer_id+"&txid="+txid;
+        if (QUERYORDER.equals(api))
+            url = "";
+        if (ORDERSTATEHISTORY.equals(api))
+            url = DOMAIN + "factoring/getorderhistorybyorderid/0001.json?METHOD=GET&mer_id="+mer_id+"&order_id="+order_id;
+        if (REPAYMENTSTATE.equals(api))
+            url = DOMAIN + "factoring/repaymentstatus/0001.json?METHOD=GET&mer_id="+mer_id;
 
+        String data = HttpUtils.doGet(url);
 
+        writerToClient(response, data);
+    }
 
 
 

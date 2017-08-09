@@ -65,7 +65,7 @@ public class SSHHelper {
     }
 
     public static void main(String args[]){
-        String exec = exec("", "", "", 22, ";");
+        String exec = exec("10.10.67.45", "mpsp", "mpsp1234", 22, "tail -f /home/db2inst1/kafka9dbrepv4/log/log4j_daily.log;");
         System.out.println(exec);
     }
 }

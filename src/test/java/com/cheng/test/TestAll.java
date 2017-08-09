@@ -55,6 +55,11 @@ public class TestAll {
     }
 
 
+    private void test02() {
+        TestAll all = new TestAll();
+    }
+
+
 
 
 }
